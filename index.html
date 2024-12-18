@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbarium & Zoological Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+    <style>
+        .image-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            margin-right: 20px;
+        }
+        .image-container img#department2 {
+            height: 200px; /* Decreased height for the second department image */
+        }
+        .image-container .info {
+            max-width: 500px;
+        }
+    </style>
+    
+</head>
+<body onload="showSection('home', document.querySelector('a[href=\'#home\']'))">
+    <header>
+        <div class="container">
+            <h1>Herbarium & Zoological Management System</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home" onclick="showSection('home', this)" class="active">Home</a></li>
+                    <li><a href="#department" onclick="showSection('department', this)">Department</a></li>
+                    <li><a href="#collections" onclick="showSection('collections', this)">Collections</a></li>
+                    <li><a href="#search" onclick="showSection('search', this)">Search</a></li>
+                    <li><a href="#faq" onclick="showSection('faq', this)">FAQ</a></li>
+                    <li><a href="#about" onclick="showSection('about', this)">About</a></li>
+                    <li><a href="#contacts" onclick="showSection('contacts', this)">Contacts</a></li>
+                </ul>
+                <div class="login-button-container">
+                    {% if session['logged_in'] %}
+                        <a href="#" class="login-button" onclick="logout()">LOGOUT</a>
+                    {% else %}
+                        <a href="/popup" class="login-button">LOGIN</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home">
+            <div class="content">
+                <div class="container">
+                    <h3>Welcome to Our Herbarium & Zoological Management System</h3>
+                    <p>
+                        Our system is dedicated to preserving plant and animal specimens for long-term study. Explore our extensive collections and learn about the importance of herbaria and zoological specimens in scientific research.
+                    </p>
+                    <img src="{{ url_for('static', filename='images/herbarium.png') }}" alt="Herbarium Image" class="responsive-image">
+                    <div class="info">
+                        <h4>Botanical Collection</h4>
+                        <p>A Botanical Collection website showcases a diverse range of plant species, offering detailed information about their taxonomy, habitat, and uses. It typically features a searchable database where users can explore various plants by scientific name, common name, or family. The website may also include high-quality images, distribution maps, and conservation status. Additionally, educational resources and articles about botany and plant conservation are often available to enhance user knowledge and engagement.</p>
+                    </div>
+                    <img src="{{ url_for('static', filename='images/zoological.png') }}" alt="Zoological Image" class="responsive-image">
+                    <div class="info">
+                        <h4>Wildlife Collection</h4>
+                        <p>A Wildlife Collection website offers a comprehensive database of various animal species, providing detailed information on their taxonomy, habitats, and behaviors. Users can search for species by common or scientific names, and view high-quality images and distribution maps. The site often includes conservation status and efforts, highlighting endangered species and protective measures. Educational articles and resources about wildlife and conservation initiatives are also featured to foster awareness and understanding among users.</p>
+                    </div>
+                    <h3>Importance of herbaria and zoological specimens</h3>
+                    <p>Herbaria and zoological collections play crucial roles in scientific research, conservation efforts, and education:
+
+                        <h4>1. Scientific Research:</h4> Herbaria and zoological collections serve as repositories of biological specimens, providing researchers with valuable material for studying biodiversity, taxonomy, evolution, and ecological relationships.
+                        
+                        <h4>2. Conservation:</h4> These collections help monitor species distributions, document biodiversity hotspots, and track changes in populations over time, aiding conservation efforts and informing policies to protect endangered species.
+                        
+                        <h4>3. Education:</h4> Herbaria and zoological collections serve as educational resources for students, educators, and the public, offering opportunities to learn about plant and animal diversity, anatomy, ecological interactions, and the importance of conservation.
+                        
+                        <h4>4. Historical Documentation:</h4> They preserve historical records of species occurrences and distributions, offering insights into past ecosystems and environmental changes, which are crucial for understanding long-term ecological trends.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="department" style="display:none;">
+            <div class="content">
+                <div class="container">
+                    <h3>Department</h3>
+                    <p>Our department focuses on the collection, preservation, and study of plant and animal specimens. We have a dedicated team of researchers and staff who work tirelessly to expand our knowledge and maintain our collections.</p>
+                    <p>We collaborate with universities, research institutions, and conservation organizations to ensure the best care and utilization of our specimens.</p>
+                    <img src="{{ url_for('static', filename='images/department1.jpg') }}" alt="Department Image 1" class="responsive-image">
+                    <div class="info">
+                        <h4>Research Activities</h4>
+                        <p>Our team research encompasses taxonomy, ecology, and conservation biology, aiming to discover and document new species while understanding their ecological roles. In taxonomy, you focus on identifying and classifying organisms, utilizing both traditional morphological methods and modern molecular techniques like DNA sequencing to reveal genetic relationships and discover new species. Ecological studies involve investigating species interactions, population dynamics, and habitat requirements to comprehend how organisms influence and are influenced by their environments. In conservation biology, you assess threats to biodiversity, develop strategies for species and habitat protection, and engage in policy advocacy to promote sustainable conservation practices. Integrating these disciplines, your work not only enhances scientific knowledge but also informs efforts to maintain ecosystem health and resilience.</p>
+                    </div>
+                    <img src="{{ url_for('static', filename='images/department2.jpg') }}" id="department2" alt="Department Image 2" class="responsive-image">
+                    <div class="info">
+                        <h4>Preservation Techniques</h4>
+                        <p>We employ advanced preservation techniques to ensure the longevity of our specimens. This includes climate-controlled storage, digital archiving, and regular maintenance checks.</p>
+                        <p>Our team employs advanced preservation techniques to ensure the longevity and integrity of your specimens, crucial for ongoing research and future studies. Climate-controlled storage systems are meticulously managed to maintain stable temperature and humidity levels, preventing physical and chemical degradation of biological materials. Digital archiving complements physical preservation by creating high-resolution images and detailed metadata for each specimen, ensuring that data is not lost and can be easily shared with the global scientific community. Regular maintenance checks are conducted to monitor the condition of both the specimens and the preservation infrastructure, allowing for early detection and correction of potential issues such as pest infestations, mold growth, or equipment malfunctions. Additionally, your team might use advanced techniques like cryopreservation for certain types of specimens, ensuring that genetic material remains viable for future analysis. By integrating these cutting-edge methods, your team not only preserves the physical specimens but also safeguards the valuable information they hold, supporting a wide range of research from taxonomy and ecology to conservation biology.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <section id="collections" style="display:none;">
+            <div class="content">
+                <div class="container">
+                    <h3>Collections</h3>
+                    <p>Our collections include a wide range of specimens from various habitats and regions. These collections are vital for studying biodiversity, understanding ecosystems, and conserving endangered species.</p>
+                    <p>We invite researchers and students to explore our collections and contribute to the ongoing study and preservation of our natural heritage.</p>
+                    <img src="{{ url_for('static', filename='images/collections1.jpg') }}" alt="Collections Image 1" class="responsive-image">
+                    <div class="info">
+                        <p>Our collections include a wide range of specimens from various habitats and regions, offering a comprehensive snapshot of global biodiversity. These meticulously curated samples are crucial for studying species diversity, ecological interactions, and evolutionary processes. By examining these specimens, scientists gain insights into ecosystem functions and the impact of environmental changes. Additionally, our collections play a pivotal role in conservation efforts, providing valuable data for protecting endangered species and their habitats. Educational programs and research initiatives leverage these resources to foster a deeper understanding and appreciation of the natural world.</p>
+                    </div>
+                    <img src="{{ url_for('static', filename='images/collections2.jpg') }}" alt="Collections Image 2" class="responsive-image">
+                    <div class="info">
+                        <p>We invite researchers and students to explore our collections and contribute to the ongoing study and preservation of our natural heritage. Our extensive repository of specimens offers a unique opportunity for scientific investigation and discovery. By engaging with our collections, you can advance research in biodiversity, ecology, and conservation. We encourage collaborative projects that leverage our resources to address pressing environmental challenges. Your contributions help expand our understanding of the natural world and support efforts to protect it. Join us in preserving and studying the rich tapestry of life that our collections represent.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="search" style="display:none;">
+            <div class="content">
+                <div class="container">
+                    <h3>Search</h3>
+                    <p>Use our search functionality to find specific specimens or information within our collections. Our database is regularly updated to provide the most accurate and comprehensive data.</p>
+                    <p>Whether you're a researcher, student, or enthusiast, our search tool can help you find the information you need.</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="search-buttons-container">
+                    <button onclick="showSearch('plants')">Search for Plants</button>
+                    <button onclick="showSearch('animals')">Search for Animals</button>
+                </div>
+                
+                <div class="edit-buttons-container">
+                    {% if session['logged_in'] %}
+                        <div class="add-specimen">
+                            <button onclick="showHide('add-plants')">Add a Plant</button>
+                            <button onclick="showHide('add-animals')">Add an Animal</button>
+                        </div>
+                        <div class="delete-specimen">
+                            <button onclick="showHide('delete-plants')">Delete a Plant</button>
+                            <button onclick="showHide('delete-animals')">Delete an Animal</button>
+                        </div>
+                        <div class="update-specimen">
+                            <button onclick="showHide('update-plants')">Update a Plant</button>
+                            <button onclick="showHide('update-animals')">Update an Animal</button>
+                        </div>
+                    {%endif%}
+                </div>
+
+                <div id="plants-add" class="add-content" style="display: none;">
+                    <form id="plant-add" action="/add-plant" method="POST">
+                        <label for="S_name">Scientific Name: <input type="text" id="S_name" name="S_name"  required></label>
+                        <label for="C_name">Common Name: <input type="text" id="C_name" name="C_name" required></label>
+                        <label for="genus">Genus: <input type="text" id="genus" name="genus" required></label>
+                        <label for="family">Family: <input type="text" id="family" name="family" required></label>
+                        <label for="description">Description: </label><textarea id="description" name="description" rows="6" cols="50" required></textarea>
+                        <label for="habitat">Habitat: </label><textarea id="habitat" name="habitat" rows="6" cols="50" required></textarea>
+                        <label for="lifespan">Lifespan: </label><textarea id="lifespan" name="lifespan" rows="6" cols="50" required></textarea>
+                        <label for="varieties">Varieties: </label><textarea id="varieties" name="varieties" rows="6" cols="50" ></textarea>
+                        <label for="uses">Uses: </label><textarea id="uses" name="uses" rows="6" cols="50" required></textarea>
+                        <label for="availability">Availability: </label><textarea id="availability" name="availability" rows="6" cols="50"></textarea>
+                        <label for="image">Image link: <input type="url" id="image" name="image" required></label>
+                        <button type="submit">Add plant</button>
+                    </form>
+                </div>
+
+                <div id="plants-delete" class="delete-content" style="display: none;">
+                    <form id="plant-delete" action="/delete-plant" method="POST">
+                        <label for="p_name">Scientific Name: <input type="text" id="p_name" name="p_name" placeholder="Enter Scientific name only.."></label>
+                        <button type="submit">Delete plant</button>
+                    </form>
+                </div>
+
+                <div id="plants-update" class="update-content" style="display: none;">
+                    <form id="plant-update" action="/update-plant" method="POST">
+                        <label for="old_s_name">Current Scientific Name: 
+                            <input type="text" id="old_s_name" name="old_s_name" required>
+                        </label>
+                        <label for="new_s_name">New Scientific Name: 
+                            <input type="text" id="new_s_name" name="new_s_name">
+                        </label>
+                        <label for="C_name">Common Name: 
+                            <input type="text" id="C_name" name="C_name">
+                        </label>
+                        <label for="genus">Genus: 
+                            <input type="text" id="genus" name="genus">
+                        </label>
+                        <label for="family">Family: 
+                            <input type="text" id="family" name="family">
+                        </label>
+                        <label for="description">Description: 
+                            <textarea id="description" name="description" rows="6" cols="50"></textarea>
+                        </label>
+                        <label for="habitat">Habitat: 
+                            <textarea id="habitat" name="habitat" rows="6" cols="50"></textarea>
+                        </label>
+                        <label for="lifespan">Lifespan: 
+                            <textarea id="lifespan" name="lifespan" rows="6" cols="50"></textarea>
+                        </label>
+                        <label for="varieties">Varieties: 
+                            <textarea id="varieties" name="varieties" rows="6" cols="50"></textarea>
+                        </label>
+                        <label for="uses">Uses: 
+                            <textarea id="uses" name="uses" rows="6" cols="50"></textarea>
+                        </label>
+                        <label for="availability">Availability: 
+                            <textarea id="availability" name="availability" rows="6" cols="50"></textarea>
+                        </label>
+                        <label for="image">Image link: 
+                            <input type="url" id="image" name="image">
+                        </label>
+                        <button type="submit">Update plant</button>
+                    </form>
+                </div>
+                
+                
+                <div id="animals-add" class="add-content" style="display: none;">
+                    <form id="animal-add" action="/add-animal" method="POST">
+                        <label for="s_name">Scientific Name: <input type="text" id="s_name" name="s_name" required></label>
+                        <label for="add_class">Class: <input type="text" id="add_class" name="class" required></label>
+                        <label for="add_order">Order: <input type="text" id="add_order" name="order" required></label>
+                        <label for="add_family">Family: <input type="text" id="add_family" name="family" required></label>
+                        <label for="add_description">Description: </label><textarea id="add_description" name="description" rows="6" cols="50" required></textarea>
+                        <label for="add_diet">Diet: </label><textarea id="add_diet" name="diet" rows="6" cols="50" required></textarea>
+                        <label for="conser_status">Conservation status: </label><textarea id="conser_status" name="conser_status" rows="6" cols="50" required></textarea>                                     
+                        <label for="add_lifespan">Lifespan: </label><textarea id="add_lifespan" name="lifespan" required></textarea>
+                        <label for="add_habitat">Habitat: </label><textarea id="add_habitat" name="habitat" required></textarea>
+                        <label for="add_image1">Image1 link: <input type="url" id="add_image1" name="image1"></label>
+                        <label for="add_image1_des">Image1 description: </label><textarea id="add_image1_des" name="image1_des" required></textarea>
+                        <label for="add_image2">Image2 link (optional): <input type="url" id="add_image2" name="image2"></label>
+                        <label for="add_image2_des">Image2 description (optional): </label><textarea id="add_image2_des" name="image2_des"></textarea>
+                        <button type="submit">Add animal</button>
+                    </form>
+                </div>
+
+                <div id="animals-delete" class="delete-content" style="display: none;">
+                    <form id="animal-delete" action="/delete-animal" method="POST">
+                        <label for="a_name">Scientific Name: <input type="text" id="a_name" name="a_name"  placeholder="Enter Scientific name only.."></label>
+                        <button type="submit">Delete animal</button>
+                    </form>
+                </div>
+ 
+                <div id="animals-update" class="update-content" style="display: none;">
+                    <form id="animal-update" action="/update-animal" method="POST">
+                        <label for="cur_name">Current Scientific Name: <input type="text" id="cur_name" name="cur_name" required></label>
+                        <label for="new_name">New Scientific Name: <input type="text" id="new_name" name="new_name"></label>
+                        <label for="update_class">Class: <input type="text" id="update_class" name="class"></label>
+                        <label for="update_order">Order: <input type="text" id="update_order" name="order"></label>
+                        <label for="update_family">Family: <input type="text" id="update_family" name="family"></label>
+                        <label for="update_description">Description: </label><textarea id="update_description" name="description" rows="6" cols="50"></textarea>
+                        <label for="update_diet">Diet: </label><textarea id="update_diet" name="diet" rows="6" cols="50"></textarea>                        
+                        <label for="update_lifespan">Lifespan: </label><textarea id="update_lifespan" name="lifespan"></textarea>
+                        <label for="update_habitat">Habitat: </label><textarea id="update_habitat" name="habitat"></textarea>
+                        <label for="update_image1">Image1 link: <input type="url" id="update_image1" name="image1"></label>
+                        <label for="update_image1_des">Image1 description: </label><textarea id="update_image1_des" name="image1_des"></textarea>
+                        <label for="update_image2">Image2 link: <input type="url" id="update_image2" name="image2"></label>
+                        <label for="update_image2_des">Image2 description: </label><textarea id="update_image2_des" name="image2_des"></textarea>
+                        <button type="submit">Update animal</button>
+                    </form>
+                </div>
+
+                <div id="plants-search" class="search-content" style="display:none;">
+                    <input type="text" id="plants-search-bar" placeholder="Search for a plant...">
+                    <button onclick="searchPlants()">Search</button>
+                    <div id="plants-search-results"></div>
+                </div>
+                <div id="animals-search" class="search-content" style="display:none;">
+                    <input type="text" id="animals-search-bar" placeholder="Search for an animal...">
+                    <button onclick="searchAnimals()">Search</button>
+                    <div id="animals-search-results"></div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container">
+                    <p>
+                        <h3>Search Button for the Herbarium and Zoological Management System</h3>
+    
+                        The search button in the Herbarium and Zoological Management System is an essential feature that allows users to quickly find specific information about various species in the collection. It enhances the user experience by providing an efficient and user-friendly way to navigate the extensive database of species.
+    
+                        <h3>Key Features and Functionality:</h3>
+    
+                        <h4>User-Friendly Input:</h4>
+                        Users can enter the name of a species or a related keyword into the search bar. This intuitive input method makes it easy for users to start their search.
+    
+                        <h4>Real-Time Search:</h4>
+                        The search function filters the species information in real-time as the user types their query. This immediate feedback helps users quickly find the relevant species without waiting for a page refresh.
+    
+                        <h4>Detailed Results:</h4>
+                        Each search result includes the species name, a detailed description, and an image. This comprehensive information helps users understand more about the species they are interested in.
+    
+                        <h4>Error Handling:</h4>
+                        If no results match the search query, the system displays a message indicating that no information is available for the entered species. This ensures users are informed and not left wondering if the search failed.
+    
+                        <h4>Responsive Design:</h4>
+                        The search function and overall page layout are designed to be responsive, ensuring a smooth user experience across different devices and screen sizes.
+    
+                        <h4>Centralized Search Button:</h4>
+                        The search button is centrally located on the page, making it easily accessible and visually prominent. This design choice encourages users to utilize the search function.
+    
+                        <h5>This search functionality is designed to support researchers, students, and enthusiasts by providing an efficient tool to access accurate and comprehensive data from the herbarium and zoological collections.</h5>
+                    </p>
+                </div>
+            </div>
+,
+        </section>
+    
+
+
+        <section id="faq" style="display:none;">
+            <div class="content">
+                <div class="container">
+                    <h3>FAQ</h3>
+                    <p>Have questions about our system or collections? Check out our Frequently Asked Questions section for answers to common inquiries.</p>
+                    <p>If you don't find the answer you're looking for, feel free to contact us directly for more information.</p>
+                 
+                    <h4>Here are 20 unique and popular questions about herbarium and zoological management systems along with their answers:</h4>
+
+                    <h5>1. Q: What is a herbarium?</h5>
+                    <p>   A: A herbarium is a collection of preserved plant specimens and associated data used for scientific study.</p>
+                    
+                    <h5>2. Q: What types of specimens are found in a zoological collection?</h5>
+                    <p>   A: Zoological collections can include whole animals, skeletons, skins, preserved organs, and DNA samples.</p>
+                    
+                    <h5>3. Q: How are herbarium specimens preserved?</h5>
+                    <p>   A: Herbarium specimens are typically pressed, dried, and mounted on sheets of paper, then stored in a controlled environment.</p>
+                    
+                    <h5>4. Q: Why are herbarium collections important for scientific research?</h5>
+                    <p>   A: They provide historical records of plant distributions, help in the study of plant taxonomy and evolution, and support conservation efforts.</p>
+                    
+                    <h5>5. Q: What is the role of a zoological collection in conservation?</h5>
+                    <p>   A: Zoological collections help monitor species diversity, track changes over time, and provide data for protecting endangered species.</p>
+                    
+                    <h5>6. Q: How can students access herbarium and zoological collections?</h5>
+                    <p>   A: Students can access these collections through educational institutions, museums, or online databases.</p>
+                    
+                    <h5>7. Q: What data is typically recorded with herbarium specimens?</h5>
+                    <p>A: Data includes the plant's scientific name, collection location, date of collection, habitat, and collector's name.</p>
+                    
+                    <h5>8. Q: How do herbarium collections aid in the study of climate change?</h5>
+                    <p>A: They provide historical baseline data that can be used to study changes in plant distributions and phenology over time.</p>
+                    
+                    <h5>9. Q: What are some challenges in maintaining herbarium and zoological collections?</h5>
+                    <p>A: Challenges include preventing specimen deterioration, ensuring proper data management, and securing funding for upkeep.</p>
+                    
+                    <h5>10. Q: How are digital herbarium collections created?</h5>
+                    <p>A: Specimens are scanned or photographed, and the images along with associated data are uploaded to online databases.</p>
+                    
+                    <h5>11. Q: What is the significance of type specimens in herbarium collections?</h5>
+                    <p>A: Type specimens are the reference specimens for a plant species' scientific name and are critical for taxonomic research.</p>
+                
+                    <h5>12. Q: How can researchers contribute to herbarium and zoological collections?</h5>
+                    <p>A: Researchers can contribute by donating specimens, providing data, and publishing research based on the collections.</p>
+                    
+                    <h5>13. Q: What technological tools are used in managing herbarium collections?</h5>
+                    <p> A: Tools include database management systems, GIS software for mapping, and digital imaging equipment.</p>
+                    
+                    <h5>14. Q: How do zoological collections support the study of evolution?</h5>
+                    <p>A: They provide physical evidence of species variation and evolution, aiding in the reconstruction of phylogenetic relationships.</p>
+                    
+                    <h5>15. Q: Can the public visit herbarium and zoological collections?</h5>
+                    <p>A: Some collections are open to the public for educational purposes, while others may require special permission for access.</p>
+                    
+                    <h5>16. Q: What is a virtual herbarium?</h5>
+                    <p>A: A virtual herbarium is an online platform where digital images and data of herbarium specimens are accessible for research and education.</p>
+                    
+                    <h5>17. Q: How do herbarium collections aid in identifying plant species?</h5>
+                    <p>A: They provide reference material for comparison, aiding in accurate plant identification and classification.</p>
+                    
+                    <h5>18. Q: What kind of training is needed to work in a herbarium or zoological collection?</h5>
+                    <p>A: Training in botany, zoology, taxonomy, museum studies, and data management is often required.</p>
+                    
+                    <h5>19. Q: How are herbarium specimens organized?</h5>
+                    <p>A: They are typically organized by plant family, genus, and species, and stored in a systematic manner for easy access.</p>
+                    
+                    <h5>20. Q: What is the role of herbarium curators?</h5>
+                    <p>A: Curators manage the collection, oversee preservation and documentation, facilitate research, and engage in public outreach and education.</p>
+            </div>
+        </section>
+
+        <section id="about" style="display:none;">
+            <div class="content">
+                <div class="container">
+                    <h3>About</h3>
+                    <p>Our mission is to advance the study of biodiversity through the collection, preservation, and research of plant and animal specimens.</p>
+                    <p>We strive to provide valuable resources for researchers, educators, and conservationists to enhance their understanding and appreciation of the natural world.</p>
+                    <div class="info-box">
+                        <h4>Florida Museum Newsletters</h4>
+                        <button>Subscribe Now</button>
+                        <h4>Museum Info</h4>
+                        <p>Hours, Tickets + Directions<br>Staff Directory</p>
+                        <h4>Legal</h4>
+                        <p>&copy; 2024 Herbarium & Zoological Management System</p>
+                        <p>Contact the Web Manager<br>This page uses Google Analytics<br>Google Privacy Policy<br>UF Privacy Policy</p>
+                    </div>
+                    <div class="statistics">
+                        <div class="stat">
+                            <p>80</p>
+                            <p>Total Animal</p>
+                        </div>
+                        <div class="stat">
+                            <p>1257</p>
+                            <p>Save Wildlife</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacts" style="display:none;">
+            <div class="content">
+                <div class="container">
+                    <h3>Contacts</h3>
+                    <div class="info-box">
+                        <h4>Contact Info</h4>
+                        <p>Florida Museum of Natural History<br>Gainesville, FL 32611<br>352-392-1721 (Research) or 352-846-2000 (Exhibits)</p>
+                    </div>
+                    <div class="contact-form">
+                        <h4>Get in Touch</h4>
+                        <form id="contactForm">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                            <label for="message">Message:</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                            <button type="submit">Submit</button>
+                        </form>
+                        <div id="confirmationMessage" style="display:none; margin-top: 10px; padding: 10px; border: 2px solid green; color: rgb(55, 117, 12); background-color: #e0f7fa; font-size: 18px; font-weight: bold;">
+                            Message Sent!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Herbarium & Zoological Management System</p>
+        </div>
+    </footer>
+      
+        
+    
+</body>
+</html>
